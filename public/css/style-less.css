@@ -1,0 +1,299 @@
+.checkbox-squared {
+  width: 100%;
+  height: 34px;
+  display: flex;
+  align-items: center;
+}
+.checkbox-squared .absolute {
+  position: relative;
+  height: 20px;
+}
+.checkbox-squared .absolute input[type=checkbox] {
+  visibility: hidden;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+}
+.checkbox-squared .absolute input[type=checkbox]:checked + label {
+  border-color: #2d6da3;
+}
+.checkbox-squared .absolute input[type=checkbox]:checked + label:after {
+  opacity: 1;
+  border-color: #2d6da3;
+}
+.checkbox-squared .absolute label {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 1px solid #777;
+  border-radius: 4px;
+  margin: 0;
+  padding: 0;
+}
+.checkbox-squared .absolute label:after {
+  position: absolute;
+  content: '';
+  width: 9px;
+  height: 5px;
+  top: 6px;
+  left: 5px;
+  border: 3px solid #777;
+  border-top: none;
+  border-right: none;
+  background: transparent;
+  opacity: 0;
+  transform: rotate(-45deg);
+}
+.checkbox-squared .checkbox-label {
+  padding: 0 10px;
+}
+.checkbox-squared .checkbox-label label {
+  font-weight: 500;
+  cursor: pointer;
+}
+.checkbox-squared:hover .check label:after {
+  border-color: #2d6da3;
+  opacity: 0.3;
+}
+.checkbox-squared:hover .checkbox-label label {
+  color: #2d6da3;
+}
+/*
+ * Component: Sidebar
+ * ------------------
+ */
+.main-sidebar {
+  padding-top: 50px;
+  min-height: 100%;
+  width: 100%;
+  z-index: 810;
+  -webkit-transition: -webkit-transform 0.3s ease-in-out, width 0.3s ease-in-out;
+  -moz-transition: -moz-transform 0.3s ease-in-out, width 0.3s ease-in-out;
+  -o-transition: -o-transform 0.3s ease-in-out, width 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+}
+@media (max-width: 767px) {
+  .main-sidebar {
+    padding-top: 100px;
+  }
+}
+@media (max-width: 767px) {
+  .main-sidebar {
+    -webkit-transform: translate(-230px, 0);
+    -ms-transform: translate(-230px, 0);
+    -o-transform: translate(-230px, 0);
+    transform: translate(-230px, 0);
+  }
+}
+@media (min-width: 768px) {
+  .sidebar-collapse .main-sidebar {
+    -webkit-transform: translate(-230px, 0);
+    -ms-transform: translate(-230px, 0);
+    -o-transform: translate(-230px, 0);
+    transform: translate(-230px, 0);
+  }
+}
+@media (max-width: 767px) {
+  .sidebar-open .main-sidebar {
+    -webkit-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    -o-transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+}
+.sidebar {
+  padding-bottom: 10px;
+}
+.sidebar-form input:focus {
+  border-color: transparent;
+}
+.user-panel {
+  position: relative;
+  width: 100%;
+  padding: 10px;
+  overflow: hidden;
+}
+.user-panel:before,
+.user-panel:after {
+  content: " ";
+  display: table;
+}
+.user-panel:after {
+  clear: both;
+}
+.user-panel > .image > img {
+  width: 100%;
+  max-width: 45px;
+  height: auto;
+}
+.user-panel > .info {
+  padding: 5px 5px 5px 15px;
+  line-height: 1;
+  position: absolute;
+  left: 55px;
+}
+.user-panel > .info > p {
+  font-weight: 600;
+  margin-bottom: 9px;
+}
+.user-panel > .info > a {
+  text-decoration: none;
+  padding-right: 5px;
+  margin-top: 3px;
+  font-size: 11px;
+}
+.user-panel > .info > a > .fa,
+.user-panel > .info > a > .ion,
+.user-panel > .info > a > .glyphicon {
+  margin-right: 3px;
+}
+.sidebar-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sidebar-menu > li {
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+.sidebar-menu > li > a {
+  padding: 12px 5px 12px 15px;
+  display: block;
+}
+.sidebar-menu > li > a > .fa,
+.sidebar-menu > li > a > .glyphicon,
+.sidebar-menu > li > a > .ion {
+  width: 20px;
+}
+.sidebar-menu > li .label,
+.sidebar-menu > li .badge {
+  margin-right: 5px;
+}
+.sidebar-menu > li .badge {
+  margin-top: 3px;
+}
+.sidebar-menu li.header {
+  padding: 10px 25px 10px 15px;
+  font-size: 12px;
+}
+.sidebar-menu li > a > .fa-angle-left,
+.sidebar-menu li > a > .pull-right-container > .fa-angle-left {
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin-right: 10px;
+  -webkit-transition: transform 0.5s ease;
+  -o-transition: transform 0.5s ease;
+  transition: transform 0.5s ease;
+}
+.sidebar-menu li > a > .fa-angle-left {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  margin-top: -8px;
+}
+.sidebar-menu .menu-open > a > .fa-angle-left,
+.sidebar-menu .menu-open > a > .pull-right-container > .fa-angle-left {
+  -webkit-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+}
+.sidebar-menu .active > .treeview-menu {
+  display: block;
+}
+.content-head {
+  height: auto;
+}
+.content-head .navbar .nav-item {
+  position: relative;
+}
+.content-left {
+  width: 250px;
+  height: 100vh;
+  float: left;
+  overflow-y: auto;
+}
+.content-right {
+  width: calc(100% - 250px);
+  float: right;
+}
+.content-right .content-wrapper {
+  height: calc(100vh - 60px);
+}
+.content-right .content-wrapper .results,
+.content-right .content-wrapper .content-image {
+  width: 50%;
+  height: auto;
+  padding: 25px;
+  float: left;
+}
+.content-right .content-wrapper .results .image-result,
+.content-right .content-wrapper .content-image .image-result {
+  padding-top: 10px;
+}
+.content-right .content-wrapper .results canvas,
+.content-right .content-wrapper .content-image canvas {
+  border: solid 1px #000;
+  border-radius: 3px;
+}
+.content-right .content-wrapper .results {
+  padding: 0;
+}
+.content-right .content-wrapper .modelo {
+  display: none;
+}
+.content-right .content-wrapper .statistics {
+  width: 100%;
+  float: left;
+  padding: 15px;
+}
+.content-right .content-wrapper .statistics ul {
+  list-style: none;
+}
+.content-right .content-footer {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.slider-selection {
+  background: #2d6da3;
+}
+.slider.slider-horizontal .slider-track {
+  height: 10px;
+  width: 90%;
+  margin-top: -5px;
+  top: 50%;
+  left: 5px;
+}
+/*
+ * Skin: Blue
+ * ----------
+ */
+.skin-blue {
+  background: #ecf0f5;
+}
+.skin-blue .content-left {
+  background: #f9fafc;
+}
+.skin-blue .content-left .main-sidebar .sidebar-menu li.open a.dropdown-item {
+  background: #dfdfdf;
+}
+.skin-blue .content-left .main-sidebar .sidebar-menu li a.dropdown-item:hover {
+  background: #dfdfdf;
+}
+.skin-blue .content-left .main-sidebar .sidebar-menu li a {
+  font-size: 14px;
+  color: #444;
+}
+.skin-blue .content-left .main-sidebar .sidebar-menu .header {
+  font-size: 18px;
+}

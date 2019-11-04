@@ -1,0 +1,39 @@
+[ ] Pilha de processos
+
+------------------------------------
+
+[x] Tons de cinza
+[x] Brilho e contraste
+[x] Negativo
+[/] Filtro de matriz
+[ ] Filtro convoloção
+	- Aguçar
+	- Desfocar
+	- Realçar bordas
+	- Detectar bordas
+[ ] Filtro Passa-Baixa
+	- Média
+	- Moda
+	- Mediana
+	- Gaussiano
+[ ] Thresholding
+	- Limiarização
+
+[ ] Filtro Passa-Alta
+	- Roberts
+	- Sobel
+	- Kirsch
+	- Robinson
+	- Hildreth
+	- Canny
+
+------------------------------------
+
+[ ] Erosão
+[ ] Dilatação
+[ ] Abertura
+[ ] Fechamento
+
+------------------------------------
+
+[ ] Padrões em imagens

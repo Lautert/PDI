@@ -160,23 +160,48 @@
 .sidebar-menu > li {
   position: relative;
   margin: 0;
-  padding: 0;
+  height: auto;
+  display: flex;
+  flex-direction: column;
 }
-.sidebar-menu > li > a {
-  padding: 12px 5px 12px 15px;
-  display: block;
+.sidebar-menu > li .item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px 15px;
+  height: 50px;
 }
-.sidebar-menu > li > a > .fa,
-.sidebar-menu > li > a > .glyphicon,
-.sidebar-menu > li > a > .ion {
+.sidebar-menu > li .item > a,
+.sidebar-menu > li .item > button {
+  height: 100%;
+  display: inline-block;
+}
+.sidebar-menu > li .item > a {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  border-radius: 3px 0 0 3px;
+  background: #c0dbeb;
+}
+.sidebar-menu > li .item > a > .fa,
+.sidebar-menu > li .item > a > .glyphicon,
+.sidebar-menu > li .item > a > .ion {
   width: 20px;
 }
-.sidebar-menu > li .label,
-.sidebar-menu > li .badge {
-  margin-right: 5px;
+.sidebar-menu > li .item > a.has-button {
+  width: 75%;
 }
-.sidebar-menu > li .badge {
-  margin-top: 3px;
+.sidebar-menu > li .item > button {
+  border: none;
+  width: 25%;
+  background: #3c8dbc;
+  border-radius: 0 3px 3px 0;
+  cursor: pointer;
+}
+.sidebar-menu > li .config {
+  display: flex;
+  flex-direction: row;
 }
 .sidebar-menu li.header {
   padding: 10px 25px 10px 15px;
@@ -214,50 +239,105 @@
 .content-head .navbar .nav-item {
   position: relative;
 }
-.content-left {
-  width: 250px;
-  height: 100vh;
+.float-left {
   float: left;
-  overflow-y: auto;
 }
-.content-right {
-  width: calc(100% - 250px);
+.float-right {
   float: right;
 }
-.content-right .content-wrapper {
-  height: calc(100vh - 60px);
+.content-menu,
+.content-stack,
+.content-render {
+  width: 100%;
+  border-bottom: 1px solid #000;
 }
-.content-right .content-wrapper .results,
-.content-right .content-wrapper .content-image {
-  width: 50%;
+.content-menu,
+.content-stack {
+  max-height: 300px;
+  overflow-y: auto;
+}
+.content-menu {
+  overflow-y: auto;
+}
+.content-menu li.header {
+  font-size: 20px;
+  font-weight: 600;
+}
+.content-menu .main-sidebar {
+  padding-top: 0 !important;
+  transform: inherit !important;
+}
+.content-stack h4 {
+  padding: 15px 10px 0;
+}
+@media only screen and (min-width: 575px) and (max-width: 1023px) {
+  .content-menu,
+  .content-stack {
+    width: 50%;
+    border-right: 1px solid #000;
+  }
+}
+@media only screen and (min-width: 1023px) {
+  .content-menu,
+  .content-stack,
+  .content-render {
+    width: 100%;
+    border: 0;
+    border-right: 1px solid #000;
+  }
+  .content-menu,
+  .content-stack {
+    width: 25%;
+  }
+  .content-render {
+    width: 50%;
+  }
+}
+@media only screen and (min-width: 1023px) and (min-height: 767px) {
+  .content-menu,
+  .content-stack,
+  .content-render {
+    max-height: 100%;
+    height: 100vh;
+    overflow-y: auto;
+  }
+}
+.content-render {
+  display: flex;
+  flex-direction: column;
+}
+.content-render .content-wrapper .results,
+.content-render .content-wrapper .content-image {
+  width: 100%;
   height: auto;
   padding: 25px;
   float: left;
 }
-.content-right .content-wrapper .results .image-result,
-.content-right .content-wrapper .content-image .image-result {
+.content-render .content-wrapper .results .image-result,
+.content-render .content-wrapper .content-image .image-result {
   padding-top: 10px;
 }
-.content-right .content-wrapper .results canvas,
-.content-right .content-wrapper .content-image canvas {
+.content-render .content-wrapper .results canvas,
+.content-render .content-wrapper .content-image canvas {
   border: solid 1px #000;
   border-radius: 3px;
 }
-.content-right .content-wrapper .results {
+.content-render .content-wrapper .results {
   padding: 0;
 }
-.content-right .content-wrapper .modelo {
+.content-render .content-wrapper .modelo {
   display: none;
+  width: 100%;
 }
-.content-right .content-wrapper .statistics {
+.content-render .content-wrapper .statistics {
   width: 100%;
   float: left;
   padding: 15px;
 }
-.content-right .content-wrapper .statistics ul {
+.content-render .content-wrapper .statistics ul {
   list-style: none;
 }
-.content-right .content-footer {
+.content-footer {
   width: 100%;
   height: 60px;
   display: flex;

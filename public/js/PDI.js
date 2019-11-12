@@ -1,4 +1,4 @@
-/*! Application - v0.0.0 - 2019-10-17 */
+/*! Application - v0.0.0 - 2019-11-12 */
 var PDI = function($) {
     var GRAY_SCALE_TYPES = [ "media", "grayscale", "desaturate", "hsv" ];
     function PDI() {

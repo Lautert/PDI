@@ -67,62 +67,68 @@ var Application = (function($, PDI){
 			});
 
 		// FILTER GRAY {
-			var applyFilterGray = false;
-			var ckFilterGray = _this.elements.contentHead.find('.filter-gray input[type="checkbox"]');
-			ckFilterGray.attr('checked', applyFilterGray);
-			function filterGray(){
-				if(!applyFilterGray){
-					if(PDI.processes['filterGray'] !== undefined){
-						delete PDI.processes['filterGray'];
-					}
-					var results = PDI.processImage();
-				}else{
-					var results = PDI.applyFilter('filterGray');
-				}
+			// var applyFilterGray = false;
+			// var ckFilterGray = _this.elements.contentHead.find('.filter-gray input[type="checkbox"]');
+			// ckFilterGray.attr('checked', applyFilterGray);
+			// function filterGray(){
+			// 	if(!applyFilterGray){
+			// 		if(PDI.processes['filterGray'] !== undefined){
+			// 			delete PDI.processes['filterGray'];
+			// 		}
+			// 		var results = PDI.processImage();
+			// 	}else{
+			// 		var results = PDI.applyFilter('filterGray');
+			// 	}
 
+			// 	_this.renderResults(results);
+			// 	_this.loadStatistics();
+			// }
+			_this.elements.contentHead.on('click', '.filter-gray .apply_filter_gray', function(e){
+				// var checkbox = $(e.target).parents('.checkbox-squared');
+				// if(checkbox.length > 0){
+				// 	applyFilterGray = !applyFilterGray;
+				// 	// ckFilterGray.attr('checked', applyFilterGray);
+				// 	filterGray();
+				// 	e.preventDefault();
+				// }else{
+				// 	filterGray();
+				// }
+				var results = PDI.applyFilter('filterGray');
 				_this.renderResults(results);
 				_this.loadStatistics();
-			}
-			_this.elements.contentHead.on('click', '.filter-gray', function(e){
-				var checkbox = $(e.target).parents('.checkbox-squared');
-				if(checkbox.length > 0){
-					applyFilterGray = !applyFilterGray;
-					ckFilterGray.attr('checked', applyFilterGray);
-					filterGray();
-					e.preventDefault();
-				}else{
-					filterGray();
-				}
 			});
 		// }
 
 		// NEGATIVE {
-			var applyFilterNG = false;
-			var ckFilterNG = _this.elements.contentHead.find('.negative input[type="checkbox"]');
-			ckFilterNG.attr('checked', applyFilterNG);
-			function filterNegative(){
-				if(!applyFilterNG){
-					if(PDI.processes['negative'] !== undefined){
-						delete PDI.processes['negative'];
-					}
-					var results = PDI.processImage();
-				}else{
-					var results = PDI.applyFilter('negative');
-				}
+			// var applyFilterNG = false;
+			// var ckFilterNG = _this.elements.contentHead.find('.negative input[type="checkbox"]');
+			// ckFilterNG.attr('checked', applyFilterNG);
+			// function filterNegative(){
+			// 	if(!applyFilterNG){
+			// 		if(PDI.processes['negative'] !== undefined){
+			// 			delete PDI.processes['negative'];
+			// 		}
+			// 		var results = PDI.processImage();
+			// 	}else{
+			// 		var results = PDI.applyFilter('negative');
+			// 	}
 
+			// 	_this.renderResults(results);
+			// 	_this.loadStatistics();
+			// }
+			_this.elements.contentHead.on('click', '.negative .apply_filter_negative', function(e){
+				// var checkbox = $(e.target).parents('.checkbox-squared');
+				// if(checkbox.length > 0){
+				// 	applyFilterNG = !applyFilterNG;
+				// 	ckFilterNG.attr('checked', applyFilterNG);
+				// 	filterNegative();
+				// 	e.preventDefault();
+				// }else{
+				// 	filterNegative();
+				// }
+				var results = PDI.applyFilter('negative');
 				_this.renderResults(results);
 				_this.loadStatistics();
-			}
-			_this.elements.contentHead.on('click', '.negative', function(e){
-				var checkbox = $(e.target).parents('.checkbox-squared');
-				if(checkbox.length > 0){
-					applyFilterNG = !applyFilterNG;
-					ckFilterNG.attr('checked', applyFilterNG);
-					filterNegative();
-					e.preventDefault();
-				}else{
-					filterNegative();
-				}
 			});
 		// }
 
@@ -324,16 +330,16 @@ var Application = (function($, PDI){
 		},
 		init: function(){
 			this.elements.inputFile = $('#inputFile');
-			this.elements.contentHead = $('.main-sidebar');
+			this.elements.contentHead = $('.content-menu');
 
-			this.elements.contentBody = $('.content-wrapper');
+			this.elements.contentBody = $('.content-render');
 			this.elements.canvasOri = this.elements.contentBody.find('#canvas-image-origin');
 			this.elements.canvasChg = this.elements.contentBody.find('#canvas-image-change');
 
 			this.elements.modals.config = $('div.modal#configuration');
 
-			this.elements.modelo = $('.content-wrapper .modelo');
-			this.elements.result = $('.content-wrapper .results');
+			this.elements.modelo = $('.content-render .modelo');
+			this.elements.result = $('.content-render .results');
 
 			this.events();
 

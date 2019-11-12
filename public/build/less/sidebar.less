@@ -92,23 +92,61 @@
 	> li {
 		position: relative;
 		margin: 0;
-		padding: 0;
-		> a {
-			padding: 12px 5px 12px 15px;
-			display: block;
-			> .fa,
-			> .glyphicon,
-			> .ion {
-				width: 20px;
+		height: auto;
+		display: flex;
+		flex-direction: column;
+
+		.item{
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			padding: 5px 15px;
+			height: 50px;
+
+			> a,
+			> button{
+				height: 100%;
+				display: inline-block;
+			}
+			> a {
+				width: 100%;
+				display: flex;
+				align-items:center;
+				justify-content: left;
+				border-radius: 3px 0 0 3px;
+				background: lighten(#3c8dbc, 35%);
+
+				> .fa,
+				> .glyphicon,
+				> .ion {
+					width: 20px;
+				}
+
+				&.has-button{
+					width: 75%;
+				}
+			}
+			> button{
+				border: none;
+				width: 25%;
+				background: #3c8dbc;
+				border-radius: 0 3px 3px 0;
+				cursor: pointer;
 			}
 		}
-		.label,
-		.badge {
-			margin-right: 5px;
+
+		.config{
+			display: flex;
+			flex-direction: row;
 		}
-		.badge {
-			margin-top: 3px;
-		}
+
+		// .label,
+		// .badge {
+		// 	margin-right: 5px;
+		// }
+		// .badge {
+		// 	margin-top: 3px;
+		// }
 	}
 	li.header {
 		padding: 10px 25px 10px 15px;

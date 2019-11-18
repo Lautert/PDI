@@ -1,10 +1,10 @@
-/*! Application - v0.0.0 - 2019-11-12 */
+/*! Application - v0.0.0 - 2019-11-17 */
 var PDI = function($) {
     var GRAY_SCALE_TYPES = [ "media", "grayscale", "desaturate", "hsv" ];
     function PDI() {
         this.original = new Image();
         this.image = new Image();
-        this.processes = {};
+        this.processes = [];
         this.grayScaleType = "media";
         this.grid = [];
         this.reset();
@@ -46,7 +46,7 @@ var PDI = function($) {
         resetImage: function(processesToo) {
             var _this = this;
             if (processesToo) {
-                _this.processes = {};
+                _this.processes = [];
             }
             var tmpCanvas = document.createElement("canvas");
             tmpCanvas.width = _this.original.width;
@@ -89,17 +89,25 @@ var PDI = function($) {
             if (params === undefined) {
                 params = {};
             }
-            _this.processes[name] = params;
+            _this.processes.push({
+                name: name,
+                params: params
+            });
             return _this.processImage();
         },
         processImage: function() {
             var _this = this;
             _this.resetImage();
-            for (var func in _this.processes) {
-                var params = _this.processes[func];
-                _this.image = _this[func].apply(this, params)[0];
+            var results = [];
+            for (var i in _this.processes) {
+                var curr = _this.processes[i];
+                var func = curr.name;
+                var params = curr.params;
+                var result = _this[func].apply(this, params)[0];
+                results.push(result);
+                _this.image = result;
             }
-            return [ _this.image ];
+            return results;
         },
         getStatistics: function() {
             return this.statistics;

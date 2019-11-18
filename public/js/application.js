@@ -1,10 +1,7 @@
-/*! Application - v0.0.0 - 2019-11-12 */
+/*! Application - v0.0.0 - 2019-11-17 */
 var Application = function($, PDI) {
     window.Pdi = PDI;
     function Application() {
-        this.brightness = 0;
-        this.contrast = 1;
-        this.binary = 200;
         this.elements = {
             inputFile: null,
             contentHead: null,
@@ -55,14 +52,11 @@ var Application = function($, PDI) {
                 _this.renderResults(results);
                 _this.loadStatistics();
             });
-            var applyFilterBinary = false;
-            var ckFilterBinary = _this.elements.contentHead.find('.binary input[type="checkbox"]');
-            ckFilterBinary.attr("checked", applyFilterBinary);
+            var binary = 200;
             var labelBinaryValue = _this.elements.contentHead.find(".binary label.value");
             function sliderBinaryChange(slider) {
                 labelBinaryValue.text(slider.value);
-                _this.binary = slider.value;
-                filterBinary();
+                binary = slider.value;
             }
             var slider = _this.elements.contentHead.find("#slider_binary").slider();
             slider.on("click", sliderBinaryChange);
@@ -70,28 +64,10 @@ var Application = function($, PDI) {
             slider.on("slide", function(slider) {
                 labelBinaryValue.text(slider.value);
             });
-            function filterBinary() {
-                if (!applyFilterBinary) {
-                    if (PDI.processes["binary"] !== undefined) {
-                        delete PDI.processes["binary"];
-                    }
-                    var results = PDI.processImage();
-                } else {
-                    var results = PDI.applyFilter("binary", _this.binary);
-                }
+            _this.elements.contentHead.on("click", ".binary .apply_filter_binary", function(e) {
+                var results = PDI.applyFilter("binary", binary);
                 _this.renderResults(results);
                 _this.loadStatistics();
-            }
-            _this.elements.contentHead.on("click", ".binary", function(e) {
-                var checkbox = $(e.target).parents(".checkbox-squared");
-                if (checkbox.length > 0) {
-                    applyFilterBinary = !applyFilterBinary;
-                    ckFilterBinary.attr("checked", applyFilterBinary);
-                    filterBinary();
-                    e.preventDefault();
-                } else {
-                    filterBinary();
-                }
             });
             _this.elements.contentHead.on("click", ".detect-border", function() {
                 var matrix = [ [ -1, -1, -1 ], [ -1, 8, -1 ], [ -1, -1, -1 ] ];
@@ -112,11 +88,11 @@ var Application = function($, PDI) {
                 var results = PDI.applyFilter("resize", x, y);
                 _this.renderResults(results);
             });
+            var rotate = 0;
             var labelRotateValue = _this.elements.contentHead.find(".rotate label.value");
             function sliderRotateChange(slider) {
                 labelRotateValue.text(slider.value);
-                var results = PDI.applyFilter("rotate", slider.value);
-                _this.renderResults(results);
+                rotate = slider.value;
             }
             var slider = _this.elements.contentHead.find("#slider_rotate").slider();
             slider.on("click", sliderRotateChange);
@@ -124,12 +100,17 @@ var Application = function($, PDI) {
             slider.on("slide", function(slider) {
                 labelRotateValue.text(slider.value);
             });
+            _this.elements.contentHead.on("click", ".rotate .apply_filter_rotate", function(e) {
+                var results = PDI.applyFilter("rotate", rotate);
+                _this.renderResults(results);
+                _this.loadStatistics();
+            });
+            var brightness = 0;
+            var contrast = 1;
             var labelBrightnessValue = _this.elements.contentHead.find(".brightness label.value");
             function sliderBrightnessChange(slider) {
                 labelBrightnessValue.text(slider.value);
-                _this.brightness = slider.value;
-                var results = PDI.applyFilter("brightnessContrast", _this.brightness, _this.contrast);
-                _this.renderResults(results);
+                brightness = slider.value;
             }
             var slider = _this.elements.contentHead.find("#slider_brightness").slider();
             slider.on("click", sliderBrightnessChange);
@@ -137,12 +118,15 @@ var Application = function($, PDI) {
             slider.on("slide", function(slider) {
                 labelBrightnessValue.text(slider.value);
             });
+            _this.elements.contentHead.on("click", ".brightness .apply_filter_brightness", function(e) {
+                var results = PDI.applyFilter("brightnessContrast", brightness, contrast);
+                _this.renderResults(results);
+                _this.loadStatistics();
+            });
             var labelContrastValue = _this.elements.contentHead.find(".contrast label.value");
             function sliderContrastChange(slider) {
                 labelContrastValue.text(slider.value);
-                _this.contrast = slider.value;
-                var results = PDI.applyFilter("brightnessContrast", _this.brightness, _this.contrast);
-                _this.renderResults(results);
+                contrast = slider.value;
             }
             var slider = _this.elements.contentHead.find("#slider_contrast").slider();
             slider.on("click", sliderContrastChange);
@@ -150,18 +134,16 @@ var Application = function($, PDI) {
             slider.on("slide", function(slider) {
                 labelContrastValue.text(slider.value);
             });
-            _this.elements.contentHead.on("change", '.mirror input[type="checkbox"]', function() {
+            _this.elements.contentHead.on("click", ".contrast .apply_filter_contrast", function(e) {
+                var results = PDI.applyFilter("brightnessContrast", brightness, contrast);
+                _this.renderResults(results);
+                _this.loadStatistics();
+            });
+            _this.elements.contentHead.on("click", ".mirror .apply_filter_mirror", function() {
                 var x = _this.elements.contentHead.find(".mirror #mirror_x").is(":checked");
                 var y = _this.elements.contentHead.find(".mirror #mirror_y").is(":checked");
                 var results = PDI.applyFilter("mirror", x, y);
                 _this.renderResults(results);
-            });
-            _this.elements.contentHead.on("click", ".aliasing", function() {
-                var results = PDI.aliasing();
-                _this.renderResults(results);
-            });
-            _this.elements.modals.config.on("change", ".gray-type", function() {
-                PDI.setGrayScale(this.value);
             });
             _this.elements.inputFile.on("change", function(e) {
                 PDI.loadImagem(event.target.files[0], function(image) {
@@ -172,6 +154,14 @@ var Application = function($, PDI) {
                 var results = PDI.applyFilter("applyFilterMatrix");
                 _this.renderResults(results);
             });
+            _this.elements.stack.on("click", ".process .remove", function() {
+                var li = $(this).parents("li.process:eq(0)");
+                var index = li.attr("data-index");
+                PDI.processes.splice(index, 1);
+                li.remove();
+                var results = PDI.processImage();
+                _this.renderResults(results);
+            });
         },
         renderResults: function(results) {
             var _this = this;
@@ -180,7 +170,7 @@ var Application = function($, PDI) {
                 var curr = results[i];
                 var modelo = this.elements.modelo.clone();
                 modelo.removeClass("modelo").addClass("content-image");
-                var title = "Resultado";
+                var title = "Resultado (Processo " + (parseInt(i) + 1) + ")";
                 modelo.find("h4").html(title);
                 var canvas = modelo.find("canvas.canvas-image-change");
                 var c = canvas.get(0);
@@ -192,6 +182,22 @@ var Application = function($, PDI) {
                 contentResult.find(".img-size").text(curr.width + "x" + curr.height);
                 _this.elements.result.append(modelo);
             }
+            _this.renderProcessStack();
+        },
+        renderProcessStack: function() {
+            var processes = PDI.processes;
+            var renderProcesses = this.elements.stack.find(".stack-process");
+            renderProcesses.html("");
+            for (var i in processes) {
+                var curr = processes[i];
+                var func = curr.name;
+                var params = curr.params;
+                var process = this.elements.stack.find(".model li").clone();
+                process.find(".name").text(func);
+                process.find(".params .value").text(params.join(", "));
+                process.attr("data-index", i);
+                renderProcesses.append(process);
+            }
         },
         init: function() {
             this.elements.inputFile = $("#inputFile");
@@ -202,6 +208,7 @@ var Application = function($, PDI) {
             this.elements.modals.config = $("div.modal#configuration");
             this.elements.modelo = $(".content-render .modelo");
             this.elements.result = $(".content-render .results");
+            this.elements.stack = $(".content-stack");
             this.events();
             return this;
         }

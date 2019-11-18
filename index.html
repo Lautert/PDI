@@ -4,310 +4,309 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" type="text/css" href="public/third_party/bootstrap-slider/slider.css">
+		<link rel="stylesheet" type="text/css" href="public/third_party/font-awesome/css/font-awesome.css">
 		<link rel="stylesheet" type="text/css" href="public/css/style-sass.css">
 		<link rel="stylesheet" type="text/css" href="public/css/style-less.css">
 		<title>Lautert - PDI - 4N</title>
 	</head>
 
 	<body class="skin-blue">
-
 		<!-- <div id="teste" style="position: fixed; top:50px; left: 800px; background: red; width:100px; height: 30px;"></div> -->
 
-		<div class="elements d-none">
-			<input id="inputFile" type="file" name="image">
-		</div>
+		<div class="content-body">
+			<div class="elements d-none">
+				<input id="inputFile" type="file" name="image">
+			</div>
 
-		<div class="content-menu float-left">
-			<aside class="main-sidebar">
-				<!-- sidebar: style can be found in sidebar.less -->
-				<section class="sidebar">
-					<!-- sidebar menu: : style can be found in sidebar.less -->
-					<ul class="sidebar-menu" data-widget="tree">
+			<div class="content-menu float-left">
+				<aside class="main-sidebar">
+					<!-- sidebar: style can be found in sidebar.less -->
+					<section class="sidebar">
+						<!-- sidebar menu: : style can be found in sidebar.less -->
+						<ul class="sidebar-menu" data-widget="tree">
 
-					<!-- IMAGEM { -->
-						<li class="header">Imagem</li>
-						<li class="image-upload">
-							<div class="item">
-								<a class="dropdown-item" href="javascript:void(0);">
-									<i class="fa fa-circle-o text-red"></i>
-									<span>Importar</span>
-								</a>
-							</div>
-						</li>
+						<!-- IMAGEM { -->
+							<li class="header">Imagem</li>
+							<li class="image-upload">
+								<div class="item">
+									<a class="dropdown-item" href="javascript:void(0);">
+										<i class="fa fa-upload text-red"></i>
+										<span>Importar</span>
+									</a>
+								</div>
+							</li>
 
-						<li class="reset">
-							<div class="item">
-								<a class="dropdown-item" href="javascript:void(0);">
-									<i class="fa fa-circle-o text-red"></i>
-									<span>Resetar</span>
-								</a>
-							</div>
-						</li>
+							<li class="reset">
+								<div class="item">
+									<a class="dropdown-item" href="javascript:void(0);">
+										<i class="fa fa-eraser text-red"></i>
+										<span>Resetar</span>
+									</a>
+								</div>
+							</li>
 
-						<li>
-							<div class="item">
-								<a
-									class="dropdown-item" href="javascript:void(0);"
-									data-toggle="modal"
-									data-target="#configuration"
-								>
-									<i class="fa fa-circle-o text-red"></i>
-									<span>Configurações</span>
-								</a>
-							</div>
-						</li>
-					<!-- } -->
+							<li>
+								<div class="item">
+									<a
+										class="dropdown-item" href="javascript:void(0);"
+										data-toggle="modal"
+										data-target="#configuration"
+									>
+										<i class="fa fa-cog text-red"></i>
+										<span>Configurações</span>
+									</a>
+								</div>
+							</li>
+						<!-- } -->
 
-					<!-- FILTROS { -->
-						<li class="header">Filtros</li>
-						<li class="filter-gray">
-							<div class="item">
-								<a class="dropdown-item has-button" href="javascript:void(0);">
-									<div class="col-12 p-0">
-										<div class="col-6 p-0">
-											<i class="fa fa-circle-o text-red"></i>
-											<span>Cinza</span>
+						<!-- FILTROS { -->
+							<li class="header">Filtros</li>
+							<li class="filter-gray">
+								<div class="item">
+									<a class="dropdown-item has-button" href="javascript:void(0);">
+										<i class="fa fa-circle-o text-red"></i>
+										<span>Cinza</span>
+									</a>
+									<button class="m-0 apply_filter_gray">Adicionar</button>
+								</div>
+							</li>
+
+							<li class="negative">
+								<div class="item">
+									<a class="dropdown-item has-button" href="javascript:void(0);">
+										<i class="fa fa-circle-o text-red"></i>
+										<span>Negativo</span>
+									</a>
+									<button class="m-0 apply_filter_negative">Adicionar</button>
+								</div>
+							</li>
+
+							<li class="binary">
+								<div class="item">
+									<a class="dropdown-item has-button" href="javascript:void(0);">
+										<i class="fa fa-circle-o text-red"></i>
+										<span>Binarizar em : <label class="value">200</label></span>
+									</a>
+									<button class="m-0 apply_filter_binary">Adicionar</button>
+								</div>
+								<div class="config col-12">
+									<input
+										id="slider_binary"
+										data-slider-id='slider_binary'
+										type="text"
+										data-slider-min="0"
+										data-slider-max="255"
+										data-slider-step="1"
+										data-slider-value="200"
+									/>
+								</div>
+							</li>
+
+							<li class="detect-border">
+								<div class="item">
+									<a class="dropdown-item has-button" href="javascript:void(0);">
+										<i class="fa fa-circle-o text-red"></i>
+										<span>Detectar bordas</span>
+									</a>
+									<button class="m-0 apply_filter_detect-border">Adicionar</button>
+								</div>
+							</li>
+
+							<li class="matrix">
+								<div class="item">
+									<a class="dropdown-item has-button" href="javascript:void(0);">
+										<i class="fa fa-circle-o text-red"></i>
+										<span>Matrix</span>
+									</a>
+									<button class="m-0 apply_filter_matrix">Adicionar</button>
+								</div>
+							</li>
+						<!-- } -->
+
+						<!-- TRANSFORMAÇÕES { -->
+							<li class="header">Transformações</li>
+
+							<li class="transladar">
+								<div class="item">
+									<a class="dropdown-item has-button" href="javascript:void(0);">
+										<i class="fa fa-circle-o text-red"></i>
+										<span>Transladar</span>
+									</a>
+									<button class="m-0 apply_filter_transladar">Adicionar</button>
+								</div>
+							</li>
+
+							<li class="resize">
+								<div class="item">
+									<a class="dropdown-item has-button" href="javascript:void(0);">
+										<i class="fa fa-circle-o text-red"></i>
+										<span>Redimencionar</span>
+									</a>
+									<button class="m-0 apply_filter_resize">Adicionar</button>
+								</div>
+							</li>
+
+							<li class="rotate">
+								<div class="item">
+									<a class="dropdown-item has-button" href="javascript:void(0);">
+										<i class="fa fa-circle-o text-red"></i>
+										<span>Rotacionar : <label class="value">0</label>º</span>
+									</a>
+									<button class="m-0 apply_filter_rotate">Adicionar</button>
+								</div>
+								<div class="config col-12">
+									<input
+										id="slider_rotate"
+										data-slider-id='slider_rotate'
+										type="text"
+										data-slider-min="0"
+										data-slider-max="360"
+										data-slider-step="1"
+										data-slider-value="0"
+									/>
+								</div>
+							</li>
+
+							<li class="brightness">
+								<div class="item">
+									<a class="dropdown-item has-button" href="javascript:void(0);">
+										<i class="fa fa-circle-o text-red"></i>
+										<span>Brilho : <label class="value">0</label></span>
+									</a>
+									<button class="m-0 apply_filter_brightness">Adicionar</button>
+								</div>
+								<div class="config col-12">
+									<input
+										id="slider_brightness"
+										data-slider-id='slider_brightness'
+										type="text"
+										data-slider-min="-255"
+										data-slider-max="255"
+										data-slider-step="1"
+										data-slider-value="0"
+									/>
+								</div>
+							</li>
+
+							<li class="contrast">
+								<div class="item">
+									<a class="dropdown-item has-button" href="javascript:void(0);">
+										<i class="fa fa-circle-o text-red"></i>
+										<span>Contraste : <label class="value">1</label></span>
+									</a>
+									<button class="m-0 apply_filter_contrast">Adicionar</button>
+								</div>
+								<div class="config col-12">
+									<input
+										id="slider_contrast"
+										data-slider-id='slider_contrast'
+										type="text"
+										data-slider-min="-1"
+										data-slider-max="20"
+										data-slider-step=".1"
+										data-slider-value="1"
+									/>
+								</div>
+							</li>
+
+							<li class="mirror">
+								<div class="item">
+									<a class="dropdown-item has-button" href="javascript:void(0);">
+										<i class="fa fa-circle-o text-red"></i>
+										<span>Espelhar</span>
+									</a>
+									<button class="m-0 apply_filter_mirror">Adicionar</button>
+								</div>
+								<div class="config col-12">
+									<div class="checkbox-squared">
+										<div class="check">
+											<div class="absolute">
+												<input type="checkbox" id="mirror_x" class="checkboxMenus" style="">
+												<label for="mirror_x"></label>
+											</div>
+										</div>
+										<div class="checkbox-label">
+											<label class="m-0 mirror_x" for="mirror_x">Em X</label>
 										</div>
 									</div>
-								</a>
-								<button class="m-0 apply_filter_gray">Adicionar</button>
-							</div>
-						</li>
 
-						<li class="negative">
-							<div class="item">
-								<a class="dropdown-item has-button" href="javascript:void(0);">
-									<div class="col-12 p-0">
-										<div class="col-6 p-0">
-											<i class="fa fa-circle-o text-red"></i>
-											<span>Negativo</span>
+									<div class="checkbox-squared">
+										<div class="check">
+											<div class="absolute">
+												<input type="checkbox" id="mirror_y" class="checkboxMenus" style="">
+												<label for="mirror_y"></label>
+											</div>
 										</div>
-									</div>
-								</a>
-								<button class="m-0 apply_filter_negative">Adicionar</button>
-							</div>
-						</li>
-
-						<li class="binary">
-							<div class="item">
-								<a class="dropdown-item has-button" href="javascript:void(0);">
-									<div class="col-12 p-0">
-										<div class="col-6 p-0">
-											<i class="fa fa-circle-o text-red"></i>
-											<span>Binarizar em : <label class="value">200</label></span>
+										<div class="checkbox-label">
+											<label class="m-0 mirror_y" for="mirror_y">Em Y</label>
 										</div>
-									</div>
-								</a>
-								<button class="m-0 apply_filter_binary">Adicionar</button>
-							</div>
-							<div class="config col-12">
-								<input
-									id="slider_binary"
-									data-slider-id='slider_binary'
-									type="text"
-									data-slider-min="0"
-									data-slider-max="255"
-									data-slider-step="1"
-									data-slider-value="200"
-								/>
-							</div>
-						</li>
-
-						<li class="detect-border">
-							<div class="item">
-								<a class="dropdown-item has-button" href="javascript:void(0);">
-									<i class="fa fa-circle-o text-red"></i>
-									<span>Detectar bordas</span>
-								</a>
-								<button class="m-0 apply_filter_detect-border">Adicionar</button>
-							</div>
-						</li>
-
-						<li class="matrix">
-							<div class="item">
-								<a class="dropdown-item has-button" href="javascript:void(0);">
-									<i class="fa fa-circle-o text-red"></i>
-									<span>Matrix</span>
-								</a>
-								<button class="m-0 apply_filter_matrix">Adicionar</button>
-							</div>
-						</li>
-					<!-- } -->
-
-					<!-- TRANSFORMAÇÕES { -->
-						<li class="header">Transformações</li>
-
-						<li class="transladar">
-							<div class="item">
-								<a class="dropdown-item has-button" href="javascript:void(0);">
-									<i class="fa fa-circle-o text-red"></i>
-									<span>Transladar</span>
-								</a>
-								<button class="m-0 apply_filter_transladar">Adicionar</button>
-							</div>
-						</li>
-
-						<li class="resize">
-							<div class="item">
-								<a class="dropdown-item has-button" href="javascript:void(0);">
-									<i class="fa fa-circle-o text-red"></i>
-									<span>Redimencionar</span>
-								</a>
-								<button class="m-0 apply_filter_resize">Adicionar</button>
-							</div>
-						</li>
-
-						<li class="rotate">
-							<div class="item">
-								<a class="dropdown-item has-button" href="javascript:void(0);">
-									<i class="fa fa-circle-o text-red"></i>
-									<span>Rotacionar : <label class="value">0</label>º</span>
-								</a>
-								<button class="m-0 apply_filter_rotate">Adicionar</button>
-							</div>
-							<div class="config col-12">
-								<input
-									id="slider_rotate"
-									data-slider-id='slider_rotate'
-									type="text"
-									data-slider-min="0"
-									data-slider-max="360"
-									data-slider-step="1"
-									data-slider-value="0"
-								/>
-							</div>
-						</li>
-
-						<li class="brightness">
-							<div class="item">
-								<a class="dropdown-item has-button" href="javascript:void(0);">
-									<i class="fa fa-circle-o text-red"></i>
-									<span>Brilho : <label class="value">0</label></span>
-								</a>
-								<button class="m-0 apply_filter_rotate">Adicionar</button>
-							</div>
-							<div class="config col-12">
-								<input
-									id="slider_brightness"
-									data-slider-id='slider_brightness'
-									type="text"
-									data-slider-min="-255"
-									data-slider-max="255"
-									data-slider-step="1"
-									data-slider-value="0"
-								/>
-							</div>
-						</li>
-
-						<li class="contrast">
-							<div class="item">
-								<a class="dropdown-item has-button" href="javascript:void(0);">
-									<i class="fa fa-circle-o text-red"></i>
-									<span>Contraste : <label class="value">1</label></span>
-								</a>
-								<button class="m-0 apply_filter_contrast">Adicionar</button>
-							</div>
-							<div class="config col-12">
-								<input
-									id="slider_contrast"
-									data-slider-id='slider_contrast'
-									type="text"
-									data-slider-min="-1"
-									data-slider-max="20"
-									data-slider-step=".1"
-									data-slider-value="1"
-								/>
-							</div>
-						</li>
-
-						<li class="mirror">
-							<div class="item">
-								<a class="dropdown-item has-button" href="javascript:void(0);">
-									<i class="fa fa-circle-o text-red"></i>
-									<span>Espelhar</span>
-								</a>
-								<button class="m-0 apply_filter_mirror">Adicionar</button>
-							</div>
-							<div class="config col-12">
-								<div class="checkbox-squared">
-									<div class="check">
-										<div class="absolute">
-											<input type="checkbox" id="mirror_x" class="checkboxMenus" style="">
-											<label for="mirror_x"></label>
-										</div>
-									</div>
-									<div class="checkbox-label">
-										<label class="m-0 mirror_x">Em X</label>
 									</div>
 								</div>
+							</li>
+						<!-- } -->
 
-								<div class="checkbox-squared">
-									<div class="check">
-										<div class="absolute">
-											<input type="checkbox" id="mirror_y" class="checkboxMenus" style="">
-											<label for="mirror_y"></label>
-										</div>
-									</div>
-									<div class="checkbox-label">
-										<label class="m-0 mirror_y">Em Y</label>
-									</div>
+						<!-- ADENDOS { -->
+							<li class="header">Adendos</li>
+							<li>
+								<div class="item">
+									<a
+										class="dropdown-item" href="javascript:void(0);"
+										data-toggle="modal"
+										data-target="#referencias"
+									>
+										<i class="fa fa-circle-o text-red"></i>
+										<span>Referências</span>
+									</a>
 								</div>
-							</div>
-						</li>
-					<!-- } -->
+							</li>
+						<!-- } -->
+						</ul>
+					</section>
+				</aside>
+			</div>
 
-					<!-- ADENDOS { -->
-						<li class="header">Adendos</li>
-						<li>
-							<div class="item">
-								<a
-									class="dropdown-item" href="javascript:void(0);"
-									data-toggle="modal"
-									data-target="#referencias"
-								>
-									<i class="fa fa-circle-o text-red"></i>
-									<span>Referências</span>
-								</a>
-							</div>
-						</li>
-					<!-- } -->
-					</ul>
-				</section>
-			</aside>
-		</div>
+			<div class="content-stack float-left">
+				<h4 class="">Pilha de processos</h4>
+				<ul class="model">
+					<li class="process">
+						<span class="name">Filtro cinza</span>
+						<span class="params">(<label class="value"></label>)</span>
+						<span class="remove">
+							<i class="fa fa-close"></i>
+						</span>
+					</li>
+				</ul>
+				<ul class="stack-process">
+				</ul>
+			</div>
 
-		<div class="content-stack float-left">
-			<h4 class="">Pilha de processos</h4>
-			<ul class="stack-process">
-			</ul>
-		</div>
-
-		<div class="content-render float-left">
-			<div class="content-wrapper">
-				<div class="content-image">
-					<h4>Original</h4>
-					<canvas id="canvas-image-origin"></canvas>
-					<div class="image-result">
-						<div class="img-size"></div>
+			<div class="content-render float-left">
+				<div class="content-wrapper">
+					<div class="content-image">
+						<h4>Original</h4>
+						<canvas id="canvas-image-origin"></canvas>
+						<div class="image-result">
+							<div class="img-size"></div>
+						</div>
 					</div>
-				</div>
-				<div class="modelo">
-					<h4>Alterada</h4>
-					<canvas class="canvas-image-change"></canvas>
-					<div class="image-result">
-						<div class="img-size"></div>
+					<div class="modelo">
+						<h4>Alterada</h4>
+						<canvas class="canvas-image-change"></canvas>
+						<div class="image-result">
+							<div class="img-size"></div>
+						</div>
 					</div>
-				</div>
-				<div class="results"></div>
-				<div class="statistics d-none">
-					<h5>Estatísticas</h5>
-					<ul>
-						<li class="media"><label>Média : </label><span></span></li>
-						<li class="mediana"><label>Mediana : </label><span></span></li>
-						<li class="vari"><label>Variância : </label><span></span></li>
-						<li class="moda"><label>Moda : </label><span></span></li>
-						<li class="total"><label>Total Pixels : </label><span></span></li>
-					</ul>
+					<div class="results"></div>
+					<div class="statistics d-none">
+						<h5>Estatísticas</h5>
+						<ul>
+							<li class="media"><label>Média : </label><span></span></li>
+							<li class="mediana"><label>Mediana : </label><span></span></li>
+							<li class="vari"><label>Variância : </label><span></span></li>
+							<li class="moda"><label>Moda : </label><span></span></li>
+							<li class="total"><label>Total Pixels : </label><span></span></li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -317,8 +316,6 @@
 				<span class="name">Guilherme Lautert</span>
 				<span class="desc">201902 - Presencial - PROCESSAMENTO DIGITAL DE IMAGENS - 4N</span>
 			</div>
-			<nav>
-			</nav>
 		</footer>
 
 		<!-- MODAL CONFIG -->

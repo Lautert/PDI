@@ -10,7 +10,7 @@ var PDI = (function($){
 	function PDI(){
 		this.original = new Image();
 		this.image = new Image();
-		this.processes = {};
+		this.processes = [];
 		this.grayScaleType = 'media';
 
 		this.grid = [];
@@ -57,7 +57,7 @@ var PDI = (function($){
 			var _this = this;
 
 			if(processesToo){
-				_this.processes = {};
+				_this.processes = [];
 			}
 
 			var tmpCanvas = document.createElement('canvas');
@@ -113,7 +113,10 @@ var PDI = (function($){
 			if(params === undefined){
 				params = {};
 			}
-			_this.processes[name] = params;
+			_this.processes.push({
+				name: name,
+				params: params
+			});
 
 			return _this.processImage();
 		},
@@ -121,12 +124,19 @@ var PDI = (function($){
 			var _this = this;
 			_this.resetImage();
 
-			for(var func in _this.processes){
-				var params = _this.processes[func];
+			var results = [];
 
-				_this.image = _this[func].apply(this, params)[0];
+			for(var i in _this.processes){
+				var curr = _this.processes[i];
+				var func = curr.name
+				var params = curr.params;
+
+				var result = _this[func].apply(this, params)[0];
+				results.push(result);
+
+				_this.image = result;
 			}
-			return [_this.image];
+			return results;
 		},
 		getStatistics: function(){
 			return this.statistics;

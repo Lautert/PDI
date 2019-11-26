@@ -613,8 +613,46 @@ var PDI = (function($){
 			}
 
 			return [imgData];
-		}
+		},
 	// }
+		searchBodyObject: function(x, y, imgData){
+			var width = imgData.width;
+			var height = imgData.height;
+
+			//             P2      P3       P4      P5      P6       P7       P8       P9
+			var nbrs = [[0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1]];
+			//             0       1        2       3       4        5        6        7
+
+			for(var i in nbrs){
+				var curr = nbrs[i];
+				var data = _this.getPixelData(x+curr[0], y+curr[1], imgData);
+
+				var Y = Math.floor(i/4/width);
+				var X = Math.abs(i - y * width * 4)/4;
+			}
+		},
+
+		domino: function(){
+			var _this = this;
+
+			this.resetImage();
+
+			_this.applyFilter('binary', 215);
+			// _this.applyFilter('applyFilterMatrix', [ [-1, -1, -1], [-1,  8, -1], [-1, -1, -1] ]);
+			// _this.applyFilter('negative');
+
+			var
+
+			var imgData = _this.getImageData();
+			for (var i = 0; i <= imgData.data.length; i += 4){
+				var y = Math.floor(i/4/width);
+				var x = Math.abs(i - y * width * 4)/4;
+			}
+
+
+		}
+
+
 	}
 	return PDI;
 }(jQuery));

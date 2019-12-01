@@ -1,4 +1,4 @@
-/*! Application - v0.0.0 - 2019-11-17 */
+/*! Application - v0.0.0 - 2019-11-27 */
 var Application = function($, PDI) {
     window.Pdi = PDI;
     function Application() {
@@ -152,6 +152,10 @@ var Application = function($, PDI) {
             });
             _this.elements.contentHead.on("click", ".matrix", function() {
                 var results = PDI.applyFilter("applyFilterMatrix");
+                _this.renderResults(results);
+            });
+            _this.elements.contentHead.on("click", ".domino", function() {
+                var results = PDI.domino();
                 _this.renderResults(results);
             });
             _this.elements.stack.on("click", ".process .remove", function() {

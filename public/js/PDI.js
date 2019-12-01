@@ -1,4 +1,4 @@
-/*! Application - v0.0.0 - 2019-11-17 */
+/*! Application - v0.0.0 - 2019-11-27 */
 var PDI = function($) {
     var GRAY_SCALE_TYPES = [ "media", "grayscale", "desaturate", "hsv" ];
     function PDI() {
@@ -450,6 +450,109 @@ var PDI = function($) {
                 }
             }
             return [ imgData ];
+        },
+        domino: function() {
+            var _this = this;
+            var processedPixel = {};
+            function searchBodyObject(x, y, imgData) {
+                var grid = {};
+                var limits = {
+                    x: {
+                        min: x,
+                        max: x
+                    },
+                    y: {
+                        min: y,
+                        max: y
+                    }
+                };
+                function getBlackNbrs(x, y, imgData) {
+                    var nbrs = [ [ 0, -1 ], [ 1, -1 ], [ 1, 0 ], [ 1, 1 ], [ 0, 1 ], [ -1, 1 ], [ -1, 0 ], [ -1, -1 ] ];
+                    var blackPixelNbrs = [];
+                    for (var i in nbrs) {
+                        var curr = nbrs[i];
+                        var nX = x + curr[0];
+                        var nY = y + curr[1];
+                        var data = _this.getPixelData(x + curr[0], y + curr[1], imgData);
+                        if (data[0] === 0) {
+                            blackPixelNbrs.push({
+                                x: nX,
+                                y: nY
+                            });
+                        }
+                    }
+                    return blackPixelNbrs;
+                }
+                function recursiveSearchBlackNbrs(x, y, imgData) {
+                    if (processedPixel[x] !== undefined && processedPixel[x][y] !== undefined) return;
+                    if (processedPixel[x] === undefined) processedPixel[x] = {};
+                    processedPixel[x][y] = true;
+                    var nbrs = getBlackNbrs(x, y, imgData);
+                    for (var i in nbrs) {
+                        var curr = nbrs[i];
+                        var nX = curr.x;
+                        var nY = curr.y;
+                        if (grid[nX] === undefined) grid[nX] = {};
+                        if (grid[nX][nY] === undefined) {
+                            grid[nX][nY] = {};
+                            grid[nX][nY] = 0;
+                            if (nX < limits.x.min) limits.x.min = nX;
+                            if (nX > limits.x.max) limits.x.max = nX;
+                            if (nY < limits.y.min) limits.y.min = nY;
+                            if (nY > limits.y.max) limits.y.max = nY;
+                            recursiveSearchBlackNbrs(curr.x, curr.y, imgData);
+                        }
+                    }
+                }
+                recursiveSearchBlackNbrs(x, y, imgData);
+                if (Object.keys(grid).length > 0) {
+                    return {
+                        limits: limits,
+                        grid: grid
+                    };
+                } else return null;
+            }
+            function createImageFromFoundedObject(object, imgDataColorFull) {
+                var width = object.limits.x.max - object.limits.x.min;
+                var height = object.limits.y.max - object.limits.y.min;
+                var imgData = _this.blankMatrix(width, height);
+                for (var x = 0; x <= width; x++) {
+                    var nX = object.limits.x.min + x;
+                    for (var y = 0; y <= height; y++) {
+                        var nY = object.limits.y.min + y;
+                        var pixel = [ 255, 255, 255, 255 ];
+                        if (object.grid[nX] !== undefined && object.grid[nX][nY] !== undefined) {
+                            pixel = _this.getPixelData(nX, nY, imgDataColorFull);
+                        }
+                        var lenStart = y * width * 4 + x * 4;
+                        imgData.data[lenStart] = pixel[0];
+                        imgData.data[lenStart + 1] = pixel[1];
+                        imgData.data[lenStart + 2] = pixel[2];
+                        imgData.data[lenStart + 3] = 255;
+                    }
+                }
+                return imgData;
+            }
+            this.resetImage();
+            var imgDataColorFull = _this.getImageData();
+            var result = _this.applyFilter("binary", 215);
+            _this.image = result[0];
+            var results = [];
+            var imgData = _this.getImageData();
+            var width = imgData.width;
+            var height = imgData.height;
+            for (var i = 0; i <= imgData.data.length; i += 4) {
+                var y = Math.floor(i / 4 / width);
+                var x = Math.abs(i - y * width * 4) / 4;
+                if (imgData.data[i] === 0) {
+                    var object = searchBodyObject(x, y, imgData);
+                    if (object !== null) {
+                        var img = createImageFromFoundedObject(object, imgDataColorFull);
+                        results.push(img);
+                    }
+                }
+            }
+            return results;
         }
     };
     return PDI;

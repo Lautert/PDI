@@ -223,6 +223,13 @@ var Application = (function($, PDI){
 				});
 			// }
 
+			// DOMINO {
+				_this.elements.contentHead.on('click', '.domino', function(){
+					var results = PDI.domino();
+					_this.renderResults(results);
+				});
+			// }
+
 			// REMOVE PROCESS {
 				_this.elements.stack.on('click', '.process .remove', function(){
 					var li = $(this).parents('li.process:eq(0)');

@@ -250,6 +250,11 @@ var Application = (function($, PDI){
 			for(var i in results){
 				var curr = results[i];
 
+				var data = curr;
+				if(curr.dataImg != undefined){
+					data = curr.dataImg;
+				}
+
 				var modelo = this.elements.modelo.clone();
 				modelo.removeClass('modelo').addClass('content-image');
 				var title = 'Resultado (Processo '+(parseInt(i)+1)+')';
@@ -257,13 +262,24 @@ var Application = (function($, PDI){
 
 				var canvas = modelo.find('canvas.canvas-image-change');
 				var c = canvas.get(0);
-				c.width = curr.width;
-				c.height = curr.height;
+				c.width = data.width;
+				c.height = data.height;
 				var ctx = c.getContext('2d');
-				ctx.putImageData(curr, 0, 0);
+				ctx.putImageData(data, 0, 0);
 
 				var contentResult = modelo.find('.image-result');
-				contentResult.find('.img-size').text(curr.width+'x'+curr.height);
+				contentResult.find('.img-size').text(data.width+'x'+data.height);
+
+				if(curr.type != undefined){
+					contentResult.find('.img-features').append('<span>'+curr.type+'</span>');
+				}
+
+				if(curr.color != undefined){
+					contentResult.find('.img-features').append(
+						'<div style="width:25px; height:25px; background-color:rgb('
+							+curr.color.R+','+curr.color.G+','+curr.color.B+')"></span>'
+					);
+				}
 
 				_this.elements.result.append(modelo);
 			}

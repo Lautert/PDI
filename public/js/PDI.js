@@ -1,4 +1,4 @@
-/*! Application - v0.0.0 - 2019-11-27 */
+/*! Application - v0.0.0 - 2019-12-04 */
 var PDI = function($) {
     var GRAY_SCALE_TYPES = [ "media", "grayscale", "desaturate", "hsv" ];
     function PDI() {
@@ -510,7 +510,9 @@ var PDI = function($) {
                         limits: limits,
                         grid: grid
                     };
-                } else return null;
+                } else {
+                    return null;
+                }
             }
             function createImageFromFoundedObject(object, imgDataColorFull) {
                 var width = object.limits.x.max - object.limits.x.min;
@@ -533,11 +535,114 @@ var PDI = function($) {
                 }
                 return imgData;
             }
+            function getBlackPixelsByImg(imgData) {
+                var blackPixels = 0;
+                for (var y = 0, x = 0, i = 0; i < imgData.data.length; i += 4) {
+                    if (imgData.data[i] == 0) {
+                        blackPixels++;
+                    }
+                }
+                return blackPixels;
+            }
+            function getFeaturesByObject(object) {
+                var objectData = object.dataImg;
+                var width = objectData.width;
+                var height = objectData.height;
+                var tmpCanvas = document.createElement("canvas");
+                tmpCanvas.width = width;
+                tmpCanvas.height = height;
+                var ctx = tmpCanvas.getContext("2d");
+                ctx.putImageData(objectData, 0, 0);
+                _this.image = ctx.getImageData(0, 0, objectData.width, objectData.height);
+                var result = _this.binary(215);
+                _this.image = result[0];
+                var middle = (width * Math.floor(height / 2) + Math.floor(width / 2)) * 4;
+                var xMid = Math.floor(width / 2);
+                var yMid = Math.floor(height / 2);
+                var angles = [ [ 1, 0 ], [ 1, 1 ], [ 0, 1 ], [ -1, 1 ], [ -1, 0 ], [ -1, -1 ], [ 0, -1 ], [ 1, -1 ] ];
+                var radius = [];
+                angles.map(function(data, key) {
+                    var x = xMid;
+                    var y = yMid;
+                    var count = 0;
+                    var _continue = true;
+                    do {
+                        _continue = false;
+                        x = x + data[0];
+                        y = y + data[1];
+                        if (x >= 0 && x < width && y >= 0 && y < height) {
+                            var pixel = _this.getPixelData(x, y, _this.image);
+                            if (pixel[0] === 0) {
+                                _continue = true;
+                                count++;
+                            }
+                        }
+                    } while (_continue);
+                    radius.push(count);
+                });
+                function isTriangle(radius) {
+                    return radius[0] < radius[1] && radius[4] < radius[3] && radius[7] < radius[0] && radius[5] < radius[4] && radius[1] * .7 <= radius[3] && radius[3] <= radius[1] * 1.3 && radius[3] * .7 <= radius[6] && radius[6] <= radius[3] * 1.3 && radius[1] * .7 <= radius[6] && radius[6] <= radius[1] * 1.3 && radius[0] * .7 <= radius[4] && radius[4] <= radius[0] * 1.3;
+                }
+                function isDiamond(radius) {
+                    return radius[1] < radius[0] && radius[3] < radius[2] && radius[5] < radius[4] && radius[7] < radius[6] && radius[0] * .7 <= radius[4] && radius[4] <= radius[0] * 1.3 && radius[2] * .7 <= radius[6] && radius[6] <= radius[2] * 1.3 && radius[4] * .7 <= radius[6] && radius[6] <= radius[4] * 1.3 && radius[6] * .7 <= radius[0] && radius[0] <= radius[6] * 1.3;
+                }
+                function isCircle(radius) {
+                    var pixelArea = getBlackPixelsByImg(_this.image);
+                    var maxRad = Math.max(radius[0], radius[2], radius[4], radius[6]);
+                    var CircleArea = Math.PI * maxRad * maxRad;
+                    return CircleArea * .9 <= pixelArea && pixelArea <= CircleArea * 1.2;
+                }
+                function isElipse(radius) {
+                    var pixelArea = getBlackPixelsByImg(_this.image);
+                    var minRad = Math.min(radius[0], radius[2], radius[4], radius[6]);
+                    var maxRad = Math.max(radius[0], radius[2], radius[4], radius[6]);
+                    var CircleArea = Math.PI * minRad * maxRad;
+                    return CircleArea * .8 <= pixelArea && pixelArea <= CircleArea * 1.2;
+                }
+                function isSquare(radius) {
+                    var diameterX = radius[0] + radius[4];
+                    var diameterY = radius[2] + radius[6];
+                    return diameterX * .9 <= width && width <= diameterX * 1.1 && diameterY * .9 <= height && height <= diameterY * 1.1 && radius[1] * .9 <= radius[0] && radius[0] <= radius[1] * 1.1 && radius[3] * .9 <= radius[2] && radius[2] <= radius[3] * 1.1 && radius[5] * .9 <= radius[4] && radius[4] <= radius[5] * 1.1 && radius[7] * .9 <= radius[6] && radius[6] <= radius[7] * 1.1 && width * .9 <= height && height <= width * 1.1;
+                }
+                function isRetangle(radius) {
+                    var diameterX = radius[0] + radius[4];
+                    var diameterY = radius[2] + radius[6];
+                    return diameterX * .9 <= width && width <= diameterX * 1.1 && diameterY * .9 <= height && height <= diameterY * 1.1 && radius[0] * .9 <= radius[4] && radius[4] <= radius[0] * 1.1 && radius[4] * .9 <= radius[0] && radius[0] <= radius[4] * 1.1 && radius[2] * .9 <= radius[1] && radius[1] <= radius[2] * 1.1 && radius[6] * .9 <= radius[5] && radius[5] <= radius[6] * 1.1 && (width * 1.1 <= height || height <= width * 1.1);
+                }
+                var type = "undefined";
+                if (isTriangle(radius)) {
+                    type = "Triangulo";
+                } else if (isCircle(radius)) {
+                    type = "Circulo";
+                } else if (isElipse(radius)) {
+                    type = "Elipse";
+                } else if (isSquare(radius)) {
+                    type = "Quadrado";
+                } else if (isRetangle(radius)) {
+                    type = "Retangulo";
+                } else if (isDiamond(radius)) {
+                    type = "Losango";
+                } else {
+                    type = "undefined";
+                }
+                var pixelMiddle = _this.getPixelData(xMid, yMid, objectData);
+                _this.image.data[middle] = 255;
+                _this.image.data[middle + 1] = 0;
+                _this.image.data[middle + 2] = 0;
+                _this.image.data[middle + 3] = 255;
+                object.type = type;
+                object.color = {
+                    R: pixelMiddle[0],
+                    G: pixelMiddle[1],
+                    B: pixelMiddle[2]
+                };
+                return object;
+            }
             this.resetImage();
             var imgDataColorFull = _this.getImageData();
             var result = _this.applyFilter("binary", 215);
             _this.image = result[0];
-            var results = [];
+            var objects = [];
             var imgData = _this.getImageData();
             var width = imgData.width;
             var height = imgData.height;
@@ -547,12 +652,13 @@ var PDI = function($) {
                 if (imgData.data[i] === 0) {
                     var object = searchBodyObject(x, y, imgData);
                     if (object !== null) {
-                        var img = createImageFromFoundedObject(object, imgDataColorFull);
-                        results.push(img);
+                        object.dataImg = createImageFromFoundedObject(object, imgDataColorFull);
+                        objects.push(getFeaturesByObject(object));
                     }
                 }
             }
-            return results;
+            objects = objects.filter(data => data.type != undefined && data.type != "undefined");
+            return objects;
         }
     };
     return PDI;
